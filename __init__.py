@@ -1,3 +1,2 @@
-from functions.generate_signature import generate_signature
+from functions.api_request import api_request
 
-print(generate_signature("1000", "GET", "https://google.com", '{"usename": "antenehg"}'))
