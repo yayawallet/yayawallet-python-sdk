@@ -17,7 +17,7 @@ async def generate_qr_url(amount: str, cause: str):
   return api_response
 
 async def get_transaction_by_id(id: str):
-  api_response = await api_request("GET", "/transaction/" + id, "", None)
+  api_response = await api_request("GET", "/transaction/find/" + id, "", None)
   return api_response
 
 async def search_transaction(query: str):

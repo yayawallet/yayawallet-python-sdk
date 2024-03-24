@@ -25,7 +25,9 @@ async def api_request(
         "YAYA-API-SIGN": signed_payload,
     }
         
-    if(data):
+    if(method == "POST"):
         response = httpx.post(url, headers=headers, data=data)
+    if(method == "PUT"):
+        response = httpx.put(url, headers=headers, data=data)
     response = httpx.get(url, headers=headers)
     return response.text()
