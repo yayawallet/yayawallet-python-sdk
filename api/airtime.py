@@ -5,5 +5,5 @@ async def buy_airtime(phone: str, amount:str):
   return api_response
 
 async def list_recharges():
-  api_response = await api_request("GET", "/airtime", "", None)
+  api_response = await api_request("GET", "/airtime/", "", None)
   return api_response

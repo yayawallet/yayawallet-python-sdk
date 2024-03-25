@@ -1,7 +1,7 @@
 from ..functions.api_request import api_request
 
 async def create_equb(equb_account, title, description, location, latitude, longitude, period,amount,private,):
-  api_response = await api_request("POST", "/airtime/buy", "", { "equb_account": equb_account, "title": title,"description": description,"location": location,"latitude": latitude,"longitude": longitude,"period": period,"amount": amount,"private": private,})
+  api_response = await api_request("POST", "/equb/create", "", { "equb_account": equb_account, "title": title,"description": description,"location": location,"latitude": latitude,"longitude": longitude,"period": period,"amount": amount,"private": private,})
   return api_response
 
 async def update_equb(id,title, description, location, latitude, longitude, period,amount,private,):
