@@ -1,5 +1,9 @@
 # virtual-environment
 yaya_env
+example_dashboard/example_env
 
 # cache
 __pycache__
+
+#idea
+.idea
