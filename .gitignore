@@ -3,3 +3,9 @@ yaya_env
 
 # cache
 __pycache__
+
+#dependencies
+yayawallet_python_sdk.egg-info
+
+#build
+dist
