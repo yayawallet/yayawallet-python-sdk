@@ -11,16 +11,16 @@ async def api_request(
     params: str,
     data: Dict = None,
 ):    
-    url = os.getenv("API_URL") + path + params
-    api_path = os.getenv("API_PATH") + path
+    url = os.getenv("YAYA_API_URL") + path + params
+    YAYA_API_PATH = os.getenv("YAYA_API_PATH") + path
 
     unix_time_response = await get_time()
     unix_time = unix_time_response.time
     json_body = json.dump(data)
-    signed_payload = generate_signature(unix_time, method, api_path, json_body)
+    signed_payload = generate_signature(unix_time, method, YAYA_API_PATH, json_body)
         
     headers = {
-        "YAYA-API-KEY": os.getenv("API_KEY"),
+        "YAYA-API-KEY": os.getenv("YAYA_API_KEY"),
         "YAYA-API-TIMESTAMP": unix_time,
         "YAYA-API-SIGN": signed_payload,
     }

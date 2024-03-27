@@ -8,7 +8,7 @@ async def create_contract(contract_number, service_type, customer_account_name, 
   api_response = await api_request("POST", "/recurring-contract/create", "", { "contract_number": contract_number, "service_type": service_type, "customer_account_name": customer_account_name, "meta_data": meta_data })
   return api_response
 
-async def reques_payment(contract_number, amount, currency, cause, notification_url, meta_data):
+async def request_payment(contract_number, amount, currency, cause, notification_url, meta_data):
   api_response = await api_request("POST", "/recurring-contract/request-payment", "", { "contract_number": contract_number, "amount": amount,  "currency": currency,"cause": cause,"notification_url": notification_url,"meta_data": meta_data,})
   return api_response
 
