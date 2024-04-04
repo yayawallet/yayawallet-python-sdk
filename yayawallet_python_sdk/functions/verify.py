@@ -2,10 +2,9 @@ import hashlib
 import hmac
 import base64
 import os
-from yayawallet_python_sdk.functions.get_time import get_time
-
-async def get_verified_payment_details(data: dict, signature):
-  if (await verify_signature(data, signature)):
+import time
+def get_verified_payment_details(data: dict, signature):
+  if (verify_signature(data, signature)):
     return {
       "amount": data["amount"],
       "yaya_id": data["id"],
@@ -17,7 +16,7 @@ async def get_verified_payment_details(data: dict, signature):
     }
   return False
 
-async def verify_signature(data, signature):
+def verify_signature(data, signature):
   time_stamp_expiry = 300
   api_secret = os.getenv("YAYA_API_SECRET")
   data_values = data.values()
@@ -25,8 +24,7 @@ async def verify_signature(data, signature):
   hashed_key = hmac.new(bytes(api_secret, 'UTF-8'), msg=bytes(prehash_string, 'UTF-8'), digestmod=hashlib.sha256).digest()
   signed_payload = base64.b64encode(hashed_key).decode()
   
-  unix_time_response = await get_time()
-  current_unix = str(unix_time_response['time'])
+  current_unix = time.time()
 
   if (signed_payload == signature and current_unix - data["timestamp"] <= time_stamp_expiry):
     return True
