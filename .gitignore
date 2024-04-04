@@ -1,5 +1,6 @@
 # virtual-environment
 yaya_env
+.idea
 
 # cache
 __pycache__
@@ -9,3 +10,4 @@ yayawallet_python_sdk.egg-info
 
 #build
 dist
+build

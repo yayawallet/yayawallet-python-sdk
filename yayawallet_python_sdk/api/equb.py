@@ -1,23 +1,23 @@
 from ..functions.api_request import api_request
 
-async def create_equb(equb_account, title, description, location, latitude, longitude, period,amount,private,):
+async def create_equb(equb_account, title, description, location, latitude, longitude, period, amount, private):
   api_response = await api_request("POST", "/equb/create", "", { "equb_account": equb_account, "title": title,"description": description,"location": location,"latitude": latitude,"longitude": longitude,"period": period,"amount": amount,"private": private,})
   return api_response
 
-async def update_equb(id,title, description, location, latitude, longitude, period,amount,private,):
+async def update_equb(id, title, description, location, latitude, longitude, period, amount, private):
   api_response = await api_request("PUT", "/equb/update/" + id, {"title": title, "description": description, "location": location, "latitude": latitude, "longitude": longitude, "period": period,"amount": amount,"private": private,})
   return api_response
 
 async def create_new_round_of_equb(id):
-  api_response = await api_request("GET", "/equb/create-new-round/" + id, None)
+  api_response = await api_request("GET", "/equb/create-new-round/" + id, "")
   return api_response
 
 async def equb_payments(id):
-  api_response = await api_request("GET", "/equb/payments/" + id, None)
+  api_response = await api_request("GET", "/equb/payments/" + id, "")
   return api_response
 
 async def equb_rounds_by_id(id):
-  api_response = await api_request("GET", "/equb/rounds/" + id, None)
+  api_response = await api_request("GET", "/equb/rounds/" + id, "")
   return api_response
 
 async def equb_rounds_by_name(name):
@@ -33,7 +33,7 @@ async def find_equbs_by_user():
   return api_response
 
 async def find_equb_by_id(id):
-  api_response = await api_request("GET", "/equb/find/" + id, None)
+  api_response = await api_request("GET", "/equb/find/" + id, "")
   return api_response
 
 async def find_equb_by_name(name):
@@ -49,7 +49,7 @@ async def find_members_of_equb(id):
   return api_response
 
 async def remove_members_of_equb(id):
-  api_response = await api_request("GET", "/equb/remove-member/" + id, None)
+  api_response = await api_request("GET", "/equb/remove-member/" + id, "")
   return api_response
 
 async def join_equb(id):
