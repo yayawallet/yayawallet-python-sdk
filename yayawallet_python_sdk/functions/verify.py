@@ -28,6 +28,6 @@ async def verify_signature(data, signature):
   unix_time_response = await get_time()
   current_unix = str(unix_time_response['time'])
 
-  if (signed_payload == signature and current_unix - data.timestamp <= time_stamp_expiry):
+  if (signed_payload == signature and current_unix - data["timestamp"] <= time_stamp_expiry):
     return True
   return False
