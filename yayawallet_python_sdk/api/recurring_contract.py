@@ -1,7 +1,7 @@
 from ..functions.api_request import api_request
 
 async def list_all_contracts():
-  api_response = await api_request("GET", "/recurring-contract/", "", None)
+  api_response = await api_request("GET", "/recurring-contract/list", "", None)
   return api_response
 
 async def create_contract(contract_number, service_type, customer_account_name, meta_data):
