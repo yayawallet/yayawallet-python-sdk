@@ -9,7 +9,7 @@ async def buy_package(phone: str, package:str):
   return api_response
 
 async def list_recharges():
-  api_response = await api_request("GET", "/airtime/", "", None)
+  api_response = await api_request("GET", "/airtime/list", "", None)
   return api_response
 
 async def list_packages(phone: str):

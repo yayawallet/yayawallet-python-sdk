@@ -1,7 +1,7 @@
 from ..functions.api_request import api_request
 
 async def get_transfer_list():
-  api_response = await api_request("GET", "/transfer/", "", None)
+  api_response = await api_request("GET", "/transfer/list", "", None)
   return api_response
 
 async def transfer_as_user(institution_code: str, account_number: str, amount: str, ref_code: str, sender_note: str, phone: str):

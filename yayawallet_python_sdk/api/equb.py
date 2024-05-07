@@ -25,7 +25,7 @@ async def equb_rounds_by_name(name):
   return api_response
 
 async def list_of_equbs():
-  api_response = await api_request("GET", "/equb/", "", None)
+  api_response = await api_request("GET", "/equb/public", "", None)
   return api_response
 
 async def find_equbs_by_user():
