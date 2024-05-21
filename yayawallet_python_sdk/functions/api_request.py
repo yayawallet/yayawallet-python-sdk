@@ -2,6 +2,7 @@ import os
 import httpx
 from yayawallet_python_sdk.functions.get_time import get_time
 from typing import Dict
+from django.http import StreamingHttpResponse
 from yayawallet_python_sdk.functions.generate_signature import generate_signature
 import json
 
@@ -29,29 +30,28 @@ async def api_request(
     }
         
     if(method == "POST"):
-        try:
-            print(data)
-            response = httpx.post(url, headers=headers, json=data)
-            response.raise_for_status()
-            return json.loads(response.text)
-        except httpx.HTTPError as exc:
-            print(f"HTTP Exception for {exc.request.url} - {exc}")
-            raise
+        response = httpx.post(url, headers=headers, json=data)
+        return StreamingHttpResponse(
+            response.text,
+            content_type=response.headers.get('content-type'),
+            status=response.status_code,
+            reason=response.reason_phrase
+        )
     if(method == "PUT"):
-        try:
-            response = httpx.put(url, headers=headers, data=data)
-            response.raise_for_status()
-            return json.loads(response.text)
-        except httpx.HTTPError as exc:
-            print(f"HTTP Exception for {exc.request.url} - {exc}")
-            raise
-    try:
-        response = httpx.get(url, headers=headers)
-        response.raise_for_status()
-    except httpx.HTTPError as exc:
-        print(f"HTTP Exception for {exc.request.url} - {exc}")
-        raise
-    return json.loads(response.text)
+        response = httpx.put(url, headers=headers, data=data)
+        return StreamingHttpResponse(
+            response.text,
+            content_type=response.headers.get('content-type'),
+            status=response.status_code,
+            reason=response.reason_phrase
+        )
+    response = httpx.get(url, headers=headers)
+    return StreamingHttpResponse(
+        response.text,
+        content_type=response.headers.get('content-type'),
+        status=response.status_code,
+        reason=response.reason_phrase
+    )
 
 
 
