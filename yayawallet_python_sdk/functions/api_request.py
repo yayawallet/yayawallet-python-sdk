@@ -45,6 +45,14 @@ async def api_request(
             status=response.status_code,
             reason=response.reason_phrase
         )
+    if data:
+        response = httpx.get(url, headers=headers, data=data)
+        return StreamingHttpResponse(
+            response.text,
+            content_type=response.headers.get('content-type'),
+            status=response.status_code,
+            reason=response.reason_phrase
+        )
     response = httpx.get(url, headers=headers)
     return StreamingHttpResponse(
         response.text,
