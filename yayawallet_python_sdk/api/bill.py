@@ -34,7 +34,7 @@ async def create_bulk_bill(bulkBill):
   return api_response
 
 async def bulk_bill_status(client_yaya_account):
-  api_response = await api_request("GET", "/bulkimport/", "", {"client_yaya_account": client_yaya_account})
+  api_response = await api_request("GET", "/bulkimport/list", "")
   return api_response
 
 async def update_bill(client_yaya_account, amount, customer_id, bill_id, customer_yaya_account, phone, email):
@@ -52,4 +52,12 @@ async def update_bill(client_yaya_account, amount, customer_id, bill_id, custome
   if email is not None:
     payload["email"] = email
   api_response = await api_request("POST", "/bill/update ", "", payload)
+  return api_response
+
+async def bulk_bill_list(client_yaya_account):
+  api_response = await api_request("POST", "/bill/list", "", {"client_yaya_account": client_yaya_account})
+  return api_response
+
+async def bulk_bill_find(client_yaya_account, bill_id):
+  api_response = await api_request("POST", "/bill/find", "", {"bill_id": bill_id, "client_yaya_account": client_yaya_account})
   return api_response
