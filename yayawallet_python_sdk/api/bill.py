@@ -1,6 +1,6 @@
 from ..functions.api_request import api_request
 
-async def create_bill(client_yaya_account, customer_yaya_account, amount, start_at, due_at, customer_id, bill_id, fwd_institution, fwd_account_number, description, phone, email, details):
+async def create_bill(client_yaya_account, customer_yaya_account, amount, start_at, due_at, customer_id, bill_id, bill_code, bill_season, fwd_institution, fwd_account_number, description, phone, email, details):
   payload = {
     "client_yaya_account": client_yaya_account,
     "amount": amount,
@@ -13,6 +13,10 @@ async def create_bill(client_yaya_account, customer_yaya_account, amount, start_
     payload["customer_yaya_account"] = customer_yaya_account
   if start_at is not None:
     payload["start_at"] = start_at
+  if bill_code is not None:
+    payload["bill_code"] = bill_code
+  if bill_season is not None:
+    payload["bill_season"] = bill_season
   if fwd_institution is not None:
     payload["fwd_institution"] = fwd_institution
   if fwd_account_number is not None:
@@ -33,7 +37,7 @@ async def create_bulk_bill(bulkBill):
   api_response = await api_request("POST", "/bulkimport/bills", "", bulkBill)
   return api_response
 
-async def bulk_bill_status(client_yaya_account):
+async def bulk_bill_status():
   api_response = await api_request("GET", "/bulkimport/list", "")
   return api_response
 
