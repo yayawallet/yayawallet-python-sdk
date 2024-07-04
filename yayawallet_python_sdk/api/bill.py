@@ -55,7 +55,7 @@ async def update_bill(client_yaya_account, amount, customer_id, bill_id, custome
     payload["phone"] = phone
   if email is not None:
     payload["email"] = email
-  api_response = await api_request("POST", "/bill/update ", "", payload)
+  api_response = await api_request("POST", "/bill/update", "", payload)
   return api_response
 
 async def bulk_bill_list(client_yaya_account):
