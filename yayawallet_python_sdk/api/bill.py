@@ -1,6 +1,6 @@
 from ..functions.api_request import api_request
 
-async def create_bill(client_yaya_account, customer_yaya_account, amount, start_at, due_at, customer_id, bill_id, bill_code, bill_season, fwd_institution, fwd_account_number, description, phone, email, details):
+async def create_bill(client_yaya_account, customer_yaya_account, amount, start_at, due_at, customer_id, bill_id, bill_code, bill_season, cluster, description, phone, email, details):
   payload = {
     "client_yaya_account": client_yaya_account,
     "amount": amount,
@@ -17,10 +17,8 @@ async def create_bill(client_yaya_account, customer_yaya_account, amount, start_
     payload["bill_code"] = bill_code
   if bill_season is not None:
     payload["bill_season"] = bill_season
-  if fwd_institution is not None:
-    payload["fwd_institution"] = fwd_institution
-  if fwd_account_number is not None:
-    payload["fwd_account_number"] = fwd_account_number
+  if cluster is not None:
+    payload["cluster"] = cluster
   if description is not None:
     payload["description"] = description
   if phone is not None:
@@ -29,7 +27,7 @@ async def create_bill(client_yaya_account, customer_yaya_account, amount, start_
     payload["email"] = email
   if details is not None:
     payload["details"] = details
-
+    
   api_response = await api_request("POST", "/bill/create", "", payload)
   return api_response
 
@@ -58,8 +56,11 @@ async def update_bill(client_yaya_account, amount, customer_id, bill_id, custome
   api_response = await api_request("POST", "/bill/update", "", payload)
   return api_response
 
-async def bulk_bill_list(client_yaya_account):
-  api_response = await api_request("POST", "/bill/list", "", {"client_yaya_account": client_yaya_account})
+async def bulk_bill_list(client_yaya_account, param):
+  page_number_param = "?p=1"
+  if(param != None):
+    page_number_param = param
+  api_response = await api_request("POST", "/bill/list", page_number_param, {"client_yaya_account": client_yaya_account})
   return api_response
 
 async def bulk_bill_find(client_yaya_account, bill_id):
