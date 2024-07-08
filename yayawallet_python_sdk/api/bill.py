@@ -39,20 +39,33 @@ async def bulk_bill_status():
   api_response = await api_request("GET", "/bulkimport/list", "")
   return api_response
 
-async def update_bill(client_yaya_account, amount, customer_id, bill_id, customer_yaya_account, phone, email):
+async def update_bill(client_yaya_account, customer_yaya_account, amount, start_at, due_at, customer_id, bill_id, bill_code, bill_season, cluster, description, phone, email, details):
   payload = {
     "client_yaya_account": client_yaya_account,
     "amount": amount,
+    "due_at": due_at,
     "customer_id": customer_id,
     "bill_id": bill_id,
   }
 
   if customer_yaya_account is not None:
     payload["customer_yaya_account"] = customer_yaya_account
+  if start_at is not None:
+    payload["start_at"] = start_at
+  if bill_code is not None:
+    payload["bill_code"] = bill_code
+  if bill_season is not None:
+    payload["bill_season"] = bill_season
+  if cluster is not None:
+    payload["cluster"] = cluster
+  if description is not None:
+    payload["description"] = description
   if phone is not None:
     payload["phone"] = phone
   if email is not None:
     payload["email"] = email
+  if details is not None:
+    payload["details"] = details
   api_response = await api_request("POST", "/bill/update", "", payload)
   return api_response
 
