@@ -23,7 +23,7 @@ async def create_customer_user(data):
 
   if serializer.is_valid():
       validated_data = serializer.validated_data
-      api_response = await api_request("POST", "/user/register", "", **validated_data)
+      api_response = await api_request("POST", "/user/register", "", validated_data)
       return api_response
   else:
       return StreamingHttpResponse(
@@ -36,7 +36,7 @@ async def create_business_user(data):
 
   if serializer.is_valid():
       validated_data = serializer.validated_data
-      api_response = await api_request("POST", "/user/register-business", "", **validated_data)
+      api_response = await api_request("POST", "/user/register-business", "", validated_data)
       return api_response
   else:
       return StreamingHttpResponse(
