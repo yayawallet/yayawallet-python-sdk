@@ -2,7 +2,7 @@ from ..functions.api_request import api_request
 
 from rest_framework import status
 
-from django.http import StreamingHttpResponse
+from rest_framework.response import Response
 
 from ..serializers.user_serializers import CustomerUserSerializer, BusinessUserSerializer
 
@@ -26,10 +26,7 @@ async def create_customer_user(data):
       api_response = await api_request("POST", "/user/register", "", validated_data)
       return api_response
   else:
-      return StreamingHttpResponse(
-        serializer.errors,
-        status=status.HTTP_400_BAD_REQUEST,\
-      )
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
   
 async def create_business_user(data):
   serializer = BusinessUserSerializer(data=data)
@@ -39,7 +36,4 @@ async def create_business_user(data):
       api_response = await api_request("POST", "/user/register-business", "", validated_data)
       return api_response
   else:
-      return StreamingHttpResponse(
-        serializer.errors,
-        status=status.HTTP_400_BAD_REQUEST,\
-      )
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
