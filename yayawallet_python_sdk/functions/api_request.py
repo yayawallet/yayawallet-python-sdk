@@ -30,7 +30,7 @@ async def api_request(
     }
         
     if(method == "POST"):
-        response = httpx.post(url, headers=headers, json=data)
+        response = httpx.post(url, headers=headers, json=data, timeout=100.0)
         return StreamingHttpResponse(
             response.text,
             content_type=response.headers.get('content-type'),
@@ -38,14 +38,14 @@ async def api_request(
             reason=response.reason_phrase
         )
     if(method == "PUT"):
-        response = httpx.put(url, headers=headers, data=data)
+        response = httpx.put(url, headers=headers, data=data, timeout=100.0)
         return StreamingHttpResponse(
             response.text,
             content_type=response.headers.get('content-type'),
             status=response.status_code,
             reason=response.reason_phrase
         )
-    response = httpx.get(url, headers=headers)
+    response = httpx.get(url, headers=headers, timeout=100.0)
     return StreamingHttpResponse(
         response.text,
         content_type=response.headers.get('content-type'),
