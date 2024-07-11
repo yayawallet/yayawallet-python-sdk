@@ -45,6 +45,14 @@ async def api_request(
             status=response.status_code,
             reason=response.reason_phrase
         )
+    if(method == "DELETE"):
+        response = httpx.delete(url, headers=headers, timeout=100.0)
+        return StreamingHttpResponse(
+            response.text,
+            content_type=response.headers.get('content-type'),
+            status=response.status_code,
+            reason=response.reason_phrase
+        )
     response = httpx.get(url, headers=headers, timeout=100.0)
     return StreamingHttpResponse(
         response.text,
