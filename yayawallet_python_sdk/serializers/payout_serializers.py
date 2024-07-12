@@ -9,4 +9,4 @@ class ClusterPayoutSerializer(serializers.Serializer):
     details = serializers.JSONField(required=False)
 
 class GetPayoutSerializer(serializers.Serializer):
-    client_yaya_account  = serializers.CharField(required=True)
+    client_yaya_account  = serializers.CharField(required=False, allow_blank=True)

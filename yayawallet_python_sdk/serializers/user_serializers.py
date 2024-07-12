@@ -35,6 +35,7 @@ class BusinessUserSerializer(serializers.Serializer):
     address = serializers.CharField(required=False, allow_blank=True)
     password = serializers.CharField(required=False, allow_blank=True)
     account_name = serializers.CharField(required=False, allow_blank=True)
+    mcc = serializers.CharField(required=False, allow_blank=True)
     fin = serializers.CharField(required=False, allow_blank=True)
     photo_base64 = serializers.CharField(required=True)
     id_front_base64 = serializers.CharField(required=True)
