@@ -9,7 +9,7 @@ async def create_inivitation(country: str, phone: str, amount: str):
   return api_response
 
 async def verify_invitation(invite_hash: str):    
-  api_response = await api_request("POST", "/invitation/find-by-inviter", "", {"invite_hash": invite_hash})
+  api_response = await api_request("POST", "/invitation/find-by-hash", "", {"invite_hash": invite_hash})
   return api_response
 
 async def cancel_invite(invite_hash: str):    
