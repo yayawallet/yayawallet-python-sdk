@@ -7,3 +7,11 @@ async def find_by_inviter():
 async def create_inivitation(country: str, phone: str, amount: str):
   api_response = await api_request("POST", "/invitation/create", "", {"country": country,"phone": phone,"amount": amount})
   return api_response
+
+async def verify_invitation(invite_hash: str):    
+  api_response = await api_request("POST", "/invitation/find-by-inviter", "", {"invite_hash": invite_hash})
+  return api_response
+
+async def cancel_invite(invite_hash: str):    
+  api_response = await api_request("DELETE", "/invitation/cancel/" + invite_hash, "", None)
+  return api_response
