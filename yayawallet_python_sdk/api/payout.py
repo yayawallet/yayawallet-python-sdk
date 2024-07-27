@@ -52,12 +52,15 @@ async def bulk_cluster_payout(data_list):
   api_response = await api_request("POST", "/bulkimport/payout-methods", "", payload)
   return api_response
 
-async def get_payout(data):
+async def get_payout(param,data):
   serializer = GetPayoutSerializer(data=data)
 
   if serializer.is_valid():
       validated_data = serializer.validated_data
-      api_response = await api_request("POST", "/payout-method/list", "", validated_data)
+      page_number_param = "?p=1"
+      if(param != None):
+        page_number_param = param
+      api_response = await api_request("POST", "/payout-method/list", page_number_param, validated_data)
       return api_response
   else:
       errors = serializer.errors
