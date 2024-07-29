@@ -8,12 +8,12 @@ from ..serializers.payout_serializers import ClusterPayoutSerializer, GetPayoutS
 
 import json
 
-async def cluster_payout(data):
+async def cluster_payout(data, api_key = None):
   serializer = ClusterPayoutSerializer(data=data)
 
   if serializer.is_valid():
       validated_data = serializer.validated_data
-      api_response = await api_request("POST", "/payout-method/create", "", validated_data)
+      api_response = await api_request("POST", "/payout-method/create", "", validated_data, api_key)
       return api_response
   else:
       errors = serializer.errors
@@ -28,7 +28,7 @@ async def cluster_payout(data):
         status=status.HTTP_400_BAD_REQUEST,
       )
   
-async def bulk_cluster_payout(data_list):
+async def bulk_cluster_payout(data_list, api_key = None):
   payload = []
   for data in data_list:
     serializer = ClusterPayoutSerializer(data=data)
@@ -49,10 +49,10 @@ async def bulk_cluster_payout(data_list):
           status=status.HTTP_400_BAD_REQUEST,
         )
     
-  api_response = await api_request("POST", "/bulkimport/payout-methods", "", payload)
+  api_response = await api_request("POST", "/bulkimport/payout-methods", "", payload, api_key)
   return api_response
 
-async def get_payout(param,data):
+async def get_payout(param, data, api_key = None):
   serializer = GetPayoutSerializer(data=data)
 
   if serializer.is_valid():
@@ -60,7 +60,7 @@ async def get_payout(param,data):
       page_number_param = "?p=1"
       if(param != None):
         page_number_param = param
-      api_response = await api_request("POST", "/payout-method/list", page_number_param, validated_data)
+      api_response = await api_request("POST", "/payout-method/list", page_number_param, validated_data, api_key)
       return api_response
   else:
       errors = serializer.errors
@@ -75,6 +75,6 @@ async def get_payout(param,data):
         status=status.HTTP_400_BAD_REQUEST,
       )
 
-async def delete_payout(id):
-  api_response = await api_request("DELETE", "/payout-method/delete/" + id, "", None)
+async def delete_payout(id, api_key = None):
+  api_response = await api_request("DELETE", "/payout-method/delete/" + id, "", None, api_key)
   return api_response
