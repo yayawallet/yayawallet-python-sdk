@@ -11,7 +11,10 @@ async def api_request(
     path: str,
     params: str,
     data: Dict = None,
+    api_key=None,
 ):    
+    if api_key is None:
+        api_key = os.getenv("YAYA_API_KEY")
     url = os.getenv("YAYA_API_URL") + path + params
     YAYA_API_PATH = os.getenv("YAYA_API_PATH") + path
 
@@ -20,11 +23,11 @@ async def api_request(
     json_body = ""
     if(data != None):
         json_body = json.dumps(data)
-    signed_payload = generate_signature(unix_time, method, YAYA_API_PATH, json_body)
+    signed_payload = generate_signature(unix_time, method, YAYA_API_PATH, json_body, api_key)
         
     headers = {
         "Content-Type": "application/json",
-        "YAYA-API-KEY": os.getenv("YAYA_API_KEY"),
+        "YAYA-API-KEY": api_key,
         "YAYA-API-TIMESTAMP": unix_time,
         "YAYA-API-SIGN": signed_payload,
     }
