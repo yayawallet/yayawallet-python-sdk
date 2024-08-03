@@ -15,6 +15,14 @@ async def api_request(
 ):    
     if api_key is None:
         api_key = os.getenv("YAYA_API_KEY")
+    
+    dynamic_name=api_key + "_YAYA_API_SECRET"
+    parsed_name=dynamic_name.replace('-', '_').upper()
+    api_secret = os.getenv(parsed_name)
+
+    if api_secret is None:
+        api_key = os.getenv("YAYA_API_KEY")
+
     url = os.getenv("YAYA_API_URL") + path + params
     YAYA_API_PATH = os.getenv("YAYA_API_PATH") + path
 
