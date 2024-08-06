@@ -39,7 +39,7 @@ async def bulk_bill_status(param, api_key = None):
   page_number_param = "?p=1"
   if(param != None):
     page_number_param = param
-  api_response = await api_request("GET", "/bulkimport/list", page_number_param, api_key)
+  api_response = await api_request("GET", "/bulkimport/list", page_number_param, None, api_key)
   return api_response
 
 async def update_bill(client_yaya_account, customer_yaya_account, amount, start_at, due_at, customer_id, bill_id, bill_code, bill_season, cluster, description, phone, email, details, api_key = None):
