@@ -5,7 +5,7 @@ async def buy_airtime(phone: str, amount:str, api_key: str = None):
   return api_response
 
 async def buy_package(phone: str, package:str, api_key: str = None):
-  api_response = await api_request("POST", "/airtime/buy", "", {"phone": phone, "amount": package}, api_key)
+  api_response = await api_request("POST", "/airtime/buy", "", {"phone": phone, "package": package}, api_key)
   return api_response
 
 async def list_recharges(api_key: str = None):
