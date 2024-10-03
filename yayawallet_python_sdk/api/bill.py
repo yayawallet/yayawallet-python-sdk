@@ -1,4 +1,5 @@
 from ..functions.api_request import api_request
+from typing import Optional
 
 async def create_bill(client_yaya_account, customer_yaya_account, amount, start_at, due_at, customer_id, bill_id, bill_code, bill_season, cluster, description, phone, email, details, api_key = None):
   payload = {
@@ -35,10 +36,8 @@ async def create_bulk_bill(bulkBill, api_key = None):
   api_response = await api_request("POST", "/bulkimport/bills", "", bulkBill, api_key)
   return api_response
 
-async def bulk_bill_status(param, api_key = None):
-  page_number_param = "?p=1"
-  if(param != None):
-    page_number_param = param
+async def bulk_bill_status(param: Optional[dict] = None, api_key: Optional[str] = None) :
+  page_number_param = param or {"p": 1}
   api_response = await api_request("GET", "/bulkimport/list", page_number_param, None, api_key)
   return api_response
 
@@ -72,10 +71,8 @@ async def update_bill(client_yaya_account, customer_yaya_account, amount, start_
   api_response = await api_request("POST", "/bill/update", "", payload, api_key)
   return api_response
 
-async def bulk_bill_list(client_yaya_account, param, api_key = None):
-  page_number_param = "?p=1"
-  if(param != None):
-    page_number_param = param
+async def bulk_bill_list(client_yaya_account, param: Optional[dict] = None, api_key: Optional[str] = None):
+  page_number_param = param or {"p": 1}
   api_response = await api_request("POST", "/bill/list", page_number_param, {"client_yaya_account": client_yaya_account}, api_key)
   return api_response
 
