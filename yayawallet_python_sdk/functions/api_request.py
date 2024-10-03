@@ -9,7 +9,7 @@ import json
 async def api_request(
     method: str,
     path: str,
-    params: str,
+    params: dict,
     data: Dict = None,
     api_key=None,
 ):    
@@ -23,7 +23,7 @@ async def api_request(
     if api_secret is None:
         api_key = os.getenv("YAYA_API_KEY")
 
-    url = os.getenv("YAYA_API_URL") + path + params
+    url = os.getenv("YAYA_API_URL") + path
     YAYA_API_PATH = os.getenv("YAYA_API_PATH") + path
 
     unix_time_response = await get_time()
@@ -41,7 +41,7 @@ async def api_request(
     }
         
     if(method == "POST"):
-        response = httpx.post(url, headers=headers, json=data, timeout=100.0)
+        response = httpx.post(url, params=params, headers=headers, json=data, timeout=100.0)
         return StreamingHttpResponse(
             response.text,
             content_type=response.headers.get('content-type'),
@@ -49,7 +49,7 @@ async def api_request(
             reason=response.reason_phrase
         )
     if(method == "PUT"):
-        response = httpx.put(url, headers=headers, data=data, timeout=100.0)
+        response = httpx.put(url, headers=headers, params=params, data=data, timeout=100.0)
         return StreamingHttpResponse(
             response.text,
             content_type=response.headers.get('content-type'),
@@ -57,14 +57,14 @@ async def api_request(
             reason=response.reason_phrase
         )
     if(method == "DELETE"):
-        response = httpx.delete(url, headers=headers, timeout=100.0)
+        response = httpx.delete(url, params=params, headers=headers, timeout=100.0)
         return StreamingHttpResponse(
             response.text,
             content_type=response.headers.get('content-type'),
             status=response.status_code,
             reason=response.reason_phrase
         )
-    response = httpx.get(url, headers=headers, timeout=100.0)
+    response = httpx.get(url, params=params, headers=headers, timeout=100.0)
     return StreamingHttpResponse(
         response.text,
         content_type=response.headers.get('content-type'),

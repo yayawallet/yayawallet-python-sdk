@@ -1,4 +1,5 @@
 from ..functions.api_request import api_request
+from typing import Optional
 
 from rest_framework import status
 
@@ -52,14 +53,12 @@ async def bulk_cluster_payout(data_list, api_key = None):
   api_response = await api_request("POST", "/bulkimport/payout-methods", "", payload, api_key)
   return api_response
 
-async def get_payout(param, data, api_key = None):
+async def get_payout(data, param: Optional[dict] = None, api_key: Optional[str] = None):
   serializer = GetPayoutSerializer(data=data)
 
   if serializer.is_valid():
       validated_data = serializer.validated_data
-      page_number_param = "?p=1"
-      if(param != None):
-        page_number_param = param
+      page_number_param = param or {"p": 1}
       api_response = await api_request("POST", "/payout-method/list", page_number_param, validated_data, api_key)
       return api_response
   else:
