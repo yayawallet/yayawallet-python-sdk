@@ -73,6 +73,7 @@ async def update_user(
       region: Optional[str] = None, 
       location: Optional[str] = None, 
       date_of_birth: Optional[str] = None, 
+      photo_url: Optional[str] = None, 
       sms_notification_enable: Optional[bool] = None, 
       email_notification_enable: Optional[bool] = None, 
       app_notification_enable: Optional[bool] = None, 
@@ -87,6 +88,7 @@ async def update_user(
         "region": region, 
         "location": location, 
         "date_of_birth": date_of_birth, 
+        'photo_url': photo_url,
         "sms_notification_enable": sms_notification_enable, 
         "email_notification_enable": email_notification_enable, 
         "app_notification_enable": app_notification_enable
