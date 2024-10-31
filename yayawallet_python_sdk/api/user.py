@@ -18,6 +18,10 @@ async def get_profile(api_key = None):
   api_response = await api_request("GET", "/user/profile", "", None, api_key)
   return api_response
 
+async def search_profile(account_name: str, api_key: str = None):
+  api_response = await api_request("POST", "/user/profile", "", { "account_name": account_name }, api_key)
+  return api_response
+
 async def search_user(query: str, api_key: str = None):
   api_response = await api_request("POST", "/user/search", "", { "query": query }, api_key)
   return api_response
