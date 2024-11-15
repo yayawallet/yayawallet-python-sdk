@@ -49,7 +49,7 @@ async def create_customer_user(data, api_key = None):
         content_type='application/json',
         status=status.HTTP_400_BAD_REQUEST,
       )
-  
+
 async def create_business_user(data, api_key = None):
   serializer = BusinessUserSerializer(data=data)
 
@@ -69,23 +69,23 @@ async def create_business_user(data, api_key = None):
         content_type='application/json',
         status=status.HTTP_400_BAD_REQUEST,
       )
-  
+
 async def update_user(
       account_name: Optional[str] = None,
       name: Optional[str] = None,
-      gender: Optional[str] = None, 
-      region: Optional[str] = None, 
-      location: Optional[str] = None, 
+      gender: Optional[str] = None,
+      region: Optional[str] = None,
+      location: Optional[str] = None,
       date_of_birth: Optional[str] = None,
-      notes: Optional[str] = None, 
-      photo_base64: Optional[str] = None, 
+      notes: Optional[str] = None,
+      photo_base64: Optional[str] = None,
       id_front_base64: Optional[str] = None,
-      id_back_base64: Optional[str] = None, 
-      sms_notification_enable: Optional[bool] = None, 
-      email_notification_enable: Optional[bool] = None, 
+      id_back_base64: Optional[str] = None,
+      sms_notification_enable: Optional[bool] = None,
+      email_notification_enable: Optional[bool] = None,
       app_notification_enable: Optional[bool] = None,
       tin_number: Optional[str] = None,
-      license_number: Optional[str] = None, 
+      license_number: Optional[str] = None,
       aoa_doc_base64: Optional[str] = None,
       tin_doc_base64: Optional[str] = None,
       moa_doc_base64: Optional[str] = None,
@@ -95,18 +95,18 @@ async def update_user(
   payload = {
     **{
       key: value for key, value in {
-        "account_name": account_name, 
-        "name": name, 
-        "gender": gender, 
-        "region": region, 
-        "location": location, 
-        "date_of_birth": date_of_birth, 
+        "account_name": account_name,
+        "name": name,
+        "gender": gender,
+        "region": region,
+        "location": location,
+        "date_of_birth": date_of_birth,
         "notes": notes,
         'photo_base64': photo_base64,
         'id_front_base64': id_front_base64,
         'id_back_base64': id_back_base64,
-        "sms_notification_enable": sms_notification_enable, 
-        "email_notification_enable": email_notification_enable, 
+        "sms_notification_enable": sms_notification_enable,
+        "email_notification_enable": email_notification_enable,
         "app_notification_enable": app_notification_enable,
         "tin_number": tin_number,
         "license_number": license_number,
@@ -118,4 +118,10 @@ async def update_user(
     }
   }
   api_response = await api_request("POST", "/user/update", "", payload, api_key)
+  return api_response
+
+
+
+async def document_actions(account_name: str, action: str, document: str, api_key: str = None):
+  api_response = await api_request("POST", f"/user/documents/{action}/{document}", "", { "account_name": account_name }, api_key)
   return api_response
