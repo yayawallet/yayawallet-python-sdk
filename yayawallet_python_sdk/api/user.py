@@ -76,13 +76,20 @@ async def update_user(
       gender: Optional[str] = None, 
       region: Optional[str] = None, 
       location: Optional[str] = None, 
-      date_of_birth: Optional[str] = None, 
+      date_of_birth: Optional[str] = None,
+      notes: Optional[str] = None, 
       photo_base64: Optional[str] = None, 
-      id_front_base64: Optional[str] = None, \
+      id_front_base64: Optional[str] = None,
       id_back_base64: Optional[str] = None, 
       sms_notification_enable: Optional[bool] = None, 
       email_notification_enable: Optional[bool] = None, 
-      app_notification_enable: Optional[bool] = None, 
+      app_notification_enable: Optional[bool] = None,
+      tin_number: Optional[str] = None,
+      license_number: Optional[str] = None, 
+      aoa_doc_base64: Optional[str] = None,
+      tin_doc_base64: Optional[str] = None,
+      moa_doc_base64: Optional[str] = None,
+      trade_license_doc_base64: Optional[str] = None,
       api_key: str = None
   ):
   payload = {
@@ -94,12 +101,19 @@ async def update_user(
         "region": region, 
         "location": location, 
         "date_of_birth": date_of_birth, 
+        "notes": notes,
         'photo_base64': photo_base64,
         'id_front_base64': id_front_base64,
         'id_back_base64': id_back_base64,
         "sms_notification_enable": sms_notification_enable, 
         "email_notification_enable": email_notification_enable, 
-        "app_notification_enable": app_notification_enable
+        "app_notification_enable": app_notification_enable,
+        "tin_number": tin_number,
+        "license_number": license_number,
+        "tin_doc_base64": tin_doc_base64,
+        "aoa_doc_base64": aoa_doc_base64,
+        "moa_doc_base64": moa_doc_base64,
+        "trade_license_doc_base64": trade_license_doc_base64
       }.items() if value is not None
     }
   }
