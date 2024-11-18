@@ -123,3 +123,7 @@ async def document_actions(action: str, document: str, account_name: str, api_ke
 async def send_new_pin(account_name: str, api_key: str = None):
   api_response = await api_request("POST", "/user/send-new-pin", "", { "account_name": account_name }, api_key)
   return api_response
+
+async def pending_approval(account_type: str, api_key: str = None):
+  api_response = await api_request("POST", f"/user/pending-approval/{account_type}", "", None, api_key)
+  return api_response
