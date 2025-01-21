@@ -92,6 +92,7 @@ async def update_user(
       trade_license_doc_base64: Optional[str] = None,
       aoa_doc_base64: Optional[str] = None,
       moa_doc_base64: Optional[str] = None,
+      meta_data: Optional[str] = None,
       api_key: str = None
   ):
   payload = {
@@ -118,6 +119,7 @@ async def update_user(
         "trade_license_doc_base64": trade_license_doc_base64,
         "aoa_doc_base64": aoa_doc_base64,
         "moa_doc_base64": moa_doc_base64,
+        "meta_data": meta_data
       }.items() if value is not None
     }
   }
