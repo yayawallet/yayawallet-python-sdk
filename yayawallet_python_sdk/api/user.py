@@ -126,12 +126,12 @@ async def update_user(
   api_response = await api_request("POST", "/user/update", "", payload, api_key)
   return api_response
 
-async def document_actions(action: str, document: str, account_name: str, api_key: str = None):
-  api_response = await api_request("POST", f"/user/documents/{action}/{document}", "", { "account_name": account_name }, api_key)
+async def document_actions(action: str, document: str, account_name: str, meta_data: Optional[str] = None, api_key: str = None):
+  api_response = await api_request("POST", f"/user/documents/{action}/{document}", "", { "account_name": account_name, "meta_data": meta_data  }, api_key)
   return api_response
 
-async def send_new_pin(account_name: str, api_key: str = None):
-  api_response = await api_request("POST", "/user/send-new-pin", "", { "account_name": account_name }, api_key)
+async def send_new_pin(account_name: str, meta_data: Optional[str] = None, api_key: str = None):
+  api_response = await api_request("POST", "/user/send-new-pin", "", { "account_name": account_name, "meta_data": meta_data }, api_key)
   return api_response
 
 async def pending_approval(account_type: str, api_key: str = None):
