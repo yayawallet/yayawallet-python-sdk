@@ -137,3 +137,7 @@ async def send_new_pin(account_name: str, meta_data: Optional[str] = None, api_k
 async def pending_approval(account_type: str, api_key: str = None):
   api_response = await api_request("POST", f"/user/pending-approval/{account_type}", "", None, api_key)
   return api_response
+
+async def get_otp(country: str, phone: str, api_key = None):
+  api_response = await api_request("POST", "/user/otp", "", {"country": country,"phone": phone}, api_key)
+  return api_response
