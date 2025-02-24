@@ -114,26 +114,7 @@ async def get_utilities_list(api_key: Optional[str] = None):
     api_response = await api_request("GET", "/utilities/list", "", None, api_key)
     return api_response
 
-async def post_utilities_list(
-    bill_id: str,
-    client_yaya_account: str,
-    api_key: Optional[str] = None
-):
-    """
-    Posts a request to fetch utilities list based on bill ID and client Yaya account.
 
-    :param bill_id: The ID of the bill.
-    :param client_yaya_account: The Yaya account of the bill provider.
-    :param api_key: Optional API key for authentication.
-    :return: API response.
-    """
-    payload = {
-        "bill_id": bill_id,
-        "client_yaya_account": client_yaya_account
-    }
-    
-    api_response = await api_request("POST", "/utilities/list", "", payload, api_key)
-    return api_response
 
 
 
