@@ -104,15 +104,7 @@ async def bulk_bill_find(client_yaya_account, bill_id, api_key = None):
   return api_response
 
 
-async def get_utilities_list(api_key: Optional[str] = None):
-    """
-    Fetches the list of utilities.
 
-    :param api_key: Optional API key for authentication.
-    :return: API response.
-    """
-    api_response = await api_request("GET", "/utilities/list", "", None, api_key)
-    return api_response
 
 
 
