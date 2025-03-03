@@ -20,5 +20,5 @@ async def is_registered(tin: str, license_number: str, api_key: str = None):
     payload = {
         "licenseNumber": license_number
     }
-    api_response = await api_request("GET", f"/kyc/etrade/is-registered/{tin}", "", payload, api_key)
+    api_response = await api_request("POST", f"/kyc/etrade/is-registered/{tin}", "", payload, api_key)
     return api_response
