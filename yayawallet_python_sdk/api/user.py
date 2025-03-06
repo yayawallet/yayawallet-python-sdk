@@ -141,3 +141,20 @@ async def pending_approval(account_type: str, api_key: str = None):
 async def get_otp(country: str, phone: str, api_key = None):
   api_response = await api_request("POST", "/user/otp", "", {"country": country,"phone": phone}, api_key)
   return api_response
+
+
+async def verify_otp(phone: str, otp: str, api_key: str = None):
+    """
+    Verify the OTP sent to the user's phone.
+
+    :param phone: The phone number to verify.
+    :param otp: The OTP code to verify.
+    :param api_key: The API key for authentication (optional).
+    :return: The API response.
+    """
+    payload = {
+        "int_phone": phone,
+        "otp": otp
+    }
+    api_response = await api_request("POST", "/phone-otp/verify", "", payload, api_key)
+    return api_response
