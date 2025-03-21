@@ -33,6 +33,7 @@ class BusinessUserSerializer(serializers.Serializer):
     region = serializers.CharField(required=False, allow_blank=True)
     gender = serializers.CharField(required=False, allow_blank=True)
     address = serializers.CharField(required=False, allow_blank=True)
+    otp = serializers.CharField(required=False, allow_blank=True)
     password = serializers.CharField(required=False, allow_blank=True)
     account_name = serializers.CharField(required=False, allow_blank=True)
     mcc = serializers.CharField(required=False, allow_blank=True)
@@ -44,6 +45,7 @@ class BusinessUserSerializer(serializers.Serializer):
     license_number = serializers.CharField(required=False, allow_blank=True)
     tin_doc_base64 = serializers.CharField(required=False, allow_blank=True)
     license_doc_base64 = serializers.CharField(required=False, allow_blank=True)
+    logo_doc_base64 = serializers.CharField(required=False, allow_blank=True)
     meta_data = serializers.JSONField(required=False)
 
     def validate(self, data):
