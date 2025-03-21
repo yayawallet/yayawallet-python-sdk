@@ -33,6 +33,7 @@ class BusinessUserSerializer(serializers.Serializer):
     region = serializers.CharField(required=False, allow_blank=True)
     gender = serializers.CharField(required=False, allow_blank=True)
     address = serializers.CharField(required=False, allow_blank=True)
+    otp = serializers.CharField(required=False, allow_blank=True)
     password = serializers.CharField(required=False, allow_blank=True)
     account_name = serializers.CharField(required=False, allow_blank=True)
     mcc = serializers.CharField(required=False, allow_blank=True)
