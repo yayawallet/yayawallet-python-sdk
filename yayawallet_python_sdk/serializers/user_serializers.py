@@ -45,7 +45,7 @@ class BusinessUserSerializer(serializers.Serializer):
     license_number = serializers.CharField(required=False, allow_blank=True)
     tin_doc_base64 = serializers.CharField(required=False, allow_blank=True)
     license_doc_base64 = serializers.CharField(required=False, allow_blank=True)
-    logo_doc_base64 = serializers.CharField(required=False, allow_blank=True)
+    logo_base64 = serializers.CharField(required=False, allow_blank=True)
     meta_data = serializers.JSONField(required=False)
 
     def validate(self, data):
