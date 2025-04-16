@@ -73,6 +73,7 @@ async def create_business_user(data, api_key = None):
 async def update_user(
       account_name: Optional[str] = None,
       name: Optional[str] = None,
+      trade_name: Optional[str] = None,
       gender: Optional[str] = None,
       region: Optional[str] = None,
       location: Optional[str] = None,
@@ -92,6 +93,7 @@ async def update_user(
       trade_license_doc_base64: Optional[str] = None,
       aoa_doc_base64: Optional[str] = None,
       moa_doc_base64: Optional[str] = None,
+      logo_base64: Optional[str] = None,
       meta_data: Optional[str] = None,
       api_key: str = None
   ):
@@ -100,6 +102,7 @@ async def update_user(
       key: value for key, value in {
         "account_name": account_name,
         "name": name,
+        "trade_name": trade_name,
         "gender": gender,
         "region": region,
         "location": location,
@@ -119,6 +122,7 @@ async def update_user(
         "trade_license_doc_base64": trade_license_doc_base64,
         "aoa_doc_base64": aoa_doc_base64,
         "moa_doc_base64": moa_doc_base64,
+        "logo_base64": logo_base64,
         "meta_data": meta_data
       }.items() if value is not None
     }
