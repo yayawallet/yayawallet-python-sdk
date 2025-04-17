@@ -43,19 +43,11 @@ def get_api_secret(api_key=None):
         connection = DatabaseConnection.get_connection()
         cursor = connection.cursor()
 
-        if api_key is None:
-            # Get default API secret
-            query = """
-            SELECT secret FROM api_key 
-            WHERE is_default = TRUE 
-            LIMIT 1
-            """
-            cursor.execute(query)
-        else:
+        if api_key:
             # Get specific API secret
             query = """
-            SELECT secret FROM api_key 
-            WHERE key = %s
+            SELECT api_secret FROM dashboard_apikey
+            WHERE api_key = %s
             LIMIT 1
             """
             cursor.execute(query, (api_key,))
