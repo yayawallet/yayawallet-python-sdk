@@ -1,63 +1,65 @@
-import psycopg2
-from psycopg2 import pool
-import os
+from django.core.exceptions import ObjectDoesNotExist
+from asgiref.sync import sync_to_async
 
-class DatabaseConnection:
-    _connection_pool = None
+class DjangoModelAPISecretProvider:
+    """
+    Provider that fetches API secrets from a Django model
+    """
+    def __init__(self, model_class):
+        self.model_class = model_class
+    
+    @sync_to_async
+    def get_default_api_key(self):
+        try:
+            api_key_obj = self.model_class.objects.filter(is_default=True).first()
+            return api_key_obj.api_key if api_key_obj else None
+        except Exception as e:
+            print(f"Error fetching default API key: {e}")
+            return None
+    
+    @sync_to_async
+    def get_api_secret(self, api_key: str = None) -> str:
+        try:
+            if api_key is None:
+                # Get default API key if none provided
+                api_key_obj = self.model_class.objects.filter(is_default=True).first()
+            else:
+                api_key_obj = self.model_class.objects.get(api_key=api_key)
+            
+            if not api_key_obj:
+                raise ValueError("No API key found (neither specific nor default)")
+                
+            return api_key_obj.api_secret
+        except ObjectDoesNotExist:
+            return None
+        except Exception as e:
+            print(f"Error fetching API secret: {e}")
+            return None
 
-    @classmethod
-    def initialize_pool(cls):
-        if cls._connection_pool is None:
-            try:
-                cls._connection_pool = psycopg2.pool.SimpleConnectionPool(
-                    minconn=1,
-                    maxconn=10,
-                    host=os.environ.get('POSTGRES_HOST'),
-                    database=os.environ.get('POSTGRES_DB'),
-                    user=os.environ.get('POSTGRES_USER'),
-                    password=os.environ.get('POSTGRES_PASSWORD'),
-                    port=os.environ.get('POSTGRES_PORT')
-                )
-            except Exception as e:
-                print(f"Error creating connection pool: {e}")
-                raise
+# Default provider (can be set by the Django project)
+_default_provider = None
 
-    @classmethod
-    def get_connection(cls):
-        if cls._connection_pool is None:
-            cls.initialize_pool()
-        return cls._connection_pool.getconn()
+def set_default_provider(provider):
+    """
+    Set the default provider for API secrets
+    """
+    global _default_provider
+    _default_provider = provider
 
-    @classmethod
-    def return_connection(cls, connection):
-        cls._connection_pool.putconn(connection)
+async def get_api_secret(api_key: str = None) -> str:
+    """
+    Get API secret using the configured provider (async version)
+    """
+    if _default_provider is None:
+        raise RuntimeError("No API secret provider configured. "
+                         "Call set_default_provider() first.")
+    return await _default_provider.get_api_secret(api_key)
 
-    @classmethod
-    def close_all_connections(cls):
-        if cls._connection_pool:
-            cls._connection_pool.closeall()
-
-def get_api_secret(api_key=None):
-    connection = None
-    try:
-        connection = DatabaseConnection.get_connection()
-        cursor = connection.cursor()
-
-        if api_key:
-            # Get specific API secret
-            query = """
-            SELECT api_secret FROM dashboard_apikey
-            WHERE api_key = %s
-            LIMIT 1
-            """
-            cursor.execute(query, (api_key,))
-        
-        result = cursor.fetchone()
-        return result[0] if result else None
-
-    except Exception as e:
-        print(f"Error fetching API secret: {e}")
-        return None
-    finally:
-        if connection:
-            DatabaseConnection.return_connection(connection)
+async def get_default_api_key() -> str:
+    """
+    Get default API key using the configured provider (async version)
+    """
+    if _default_provider is None:
+        raise RuntimeError("No API secret provider configured. "
+                         "Call set_default_provider() first.")
+    return await _default_provider.get_default_api_key()
