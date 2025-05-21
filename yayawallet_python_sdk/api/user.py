@@ -2,7 +2,7 @@ from ..functions.api_request import api_request
 
 from rest_framework import status
 
-from django.http import StreamingHttpResponse
+from django.http import HttpResponse
 
 from ..serializers.user_serializers import CustomerUserSerializer, BusinessUserSerializer
 
@@ -44,7 +44,7 @@ async def create_customer_user(data, api_key = None):
       def error_generator():
           yield json_errors
 
-      return StreamingHttpResponse(
+      return HttpResponse(
         error_generator(),
         content_type='application/json',
         status=status.HTTP_400_BAD_REQUEST,
@@ -64,7 +64,7 @@ async def create_business_user(data, api_key = None):
       def error_generator():
           yield json_errors
 
-      return StreamingHttpResponse(
+      return HttpResponse(
         error_generator(),
         content_type='application/json',
         status=status.HTTP_400_BAD_REQUEST,

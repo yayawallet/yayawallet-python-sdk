@@ -3,7 +3,7 @@ from typing import Optional
 
 from rest_framework import status
 
-from django.http import StreamingHttpResponse
+from django.http import HttpResponse
 
 from ..serializers.payout_serializers import ClusterPayoutSerializer, GetPayoutSerializer
 
@@ -23,12 +23,12 @@ async def cluster_payout(data, api_key = None):
       def error_generator():
           yield json_errors
 
-      return StreamingHttpResponse(
+      return HttpResponse(
         error_generator(),
         content_type='application/json',
         status=status.HTTP_400_BAD_REQUEST,
       )
-  
+
 async def bulk_cluster_payout(data_list, api_key = None):
   payload = []
   for data in data_list:
@@ -44,12 +44,12 @@ async def bulk_cluster_payout(data_list, api_key = None):
         def error_generator():
             yield json_errors
 
-        return StreamingHttpResponse(
+        return HttpResponse(
           error_generator(),
           content_type='application/json',
           status=status.HTTP_400_BAD_REQUEST,
         )
-    
+
   api_response = await api_request("POST", "/bulkimport/payout-methods", "", payload, api_key)
   return api_response
 
@@ -68,7 +68,7 @@ async def get_payout(data, param: Optional[dict] = None, api_key: Optional[str] 
       def error_generator():
           yield json_errors
 
-      return StreamingHttpResponse(
+      return HttpResponse(
         error_generator(),
         content_type='application/json',
         status=status.HTTP_400_BAD_REQUEST,
