@@ -3,7 +3,7 @@ from typing import Optional
 
 from rest_framework import status
 
-from django.http import StreamingHttpResponse
+from django.http import HttpResponse
 
 from ..serializers.payout_serializers import ClusterPayoutSerializer, GetPayoutSerializer
 
@@ -18,17 +18,12 @@ async def cluster_payout(data, api_key = None):
       return api_response
   else:
       errors = serializer.errors
-      json_errors = json.dumps(errors)
-
-      def error_generator():
-          yield json_errors
-
-      return StreamingHttpResponse(
-        error_generator(),
-        content_type='application/json',
-        status=status.HTTP_400_BAD_REQUEST,
+      return HttpResponse(
+          json.dumps(errors),
+          content_type='application/json',
+          status=status.HTTP_400_BAD_REQUEST
       )
-  
+
 async def bulk_cluster_payout(data_list, api_key = None):
   payload = []
   for data in data_list:
@@ -39,17 +34,12 @@ async def bulk_cluster_payout(data_list, api_key = None):
         payload.append(validated_data)
     else:
         errors = serializer.errors
-        json_errors = json.dumps(errors)
-
-        def error_generator():
-            yield json_errors
-
-        return StreamingHttpResponse(
-          error_generator(),
+        return HttpResponse(
+          json.dumps(errors),
           content_type='application/json',
           status=status.HTTP_400_BAD_REQUEST,
         )
-    
+
   api_response = await api_request("POST", "/bulkimport/payout-methods", "", payload, api_key)
   return api_response
 
@@ -63,15 +53,10 @@ async def get_payout(data, param: Optional[dict] = None, api_key: Optional[str] 
       return api_response
   else:
       errors = serializer.errors
-      json_errors = json.dumps(errors)
-
-      def error_generator():
-          yield json_errors
-
-      return StreamingHttpResponse(
-        error_generator(),
-        content_type='application/json',
-        status=status.HTTP_400_BAD_REQUEST,
+      return HttpResponse(
+          json.dumps(errors),
+          content_type='application/json',
+          status=status.HTTP_400_BAD_REQUEST
       )
 
 async def delete_payout(id, api_key = None):
