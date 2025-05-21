@@ -18,15 +18,10 @@ async def cluster_payout(data, api_key = None):
       return api_response
   else:
       errors = serializer.errors
-      json_errors = json.dumps(errors)
-
-      def error_generator():
-          yield json_errors
-
       return HttpResponse(
-        error_generator(),
-        content_type='application/json',
-        status=status.HTTP_400_BAD_REQUEST,
+          json.dumps(errors),
+          content_type='application/json',
+          status=status.HTTP_400_BAD_REQUEST
       )
 
 async def bulk_cluster_payout(data_list, api_key = None):
@@ -39,13 +34,8 @@ async def bulk_cluster_payout(data_list, api_key = None):
         payload.append(validated_data)
     else:
         errors = serializer.errors
-        json_errors = json.dumps(errors)
-
-        def error_generator():
-            yield json_errors
-
         return HttpResponse(
-          error_generator(),
+          json.dumps(errors),
           content_type='application/json',
           status=status.HTTP_400_BAD_REQUEST,
         )
@@ -63,15 +53,10 @@ async def get_payout(data, param: Optional[dict] = None, api_key: Optional[str] 
       return api_response
   else:
       errors = serializer.errors
-      json_errors = json.dumps(errors)
-
-      def error_generator():
-          yield json_errors
-
       return HttpResponse(
-        error_generator(),
-        content_type='application/json',
-        status=status.HTTP_400_BAD_REQUEST,
+          json.dumps(errors),
+          content_type='application/json',
+          status=status.HTTP_400_BAD_REQUEST
       )
 
 async def delete_payout(id, api_key = None):

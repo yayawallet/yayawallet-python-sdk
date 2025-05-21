@@ -39,15 +39,10 @@ async def create_customer_user(data, api_key = None):
       return api_response
   else:
       errors = serializer.errors
-      json_errors = json.dumps(errors)
-
-      def error_generator():
-          yield json_errors
-
       return HttpResponse(
-        error_generator(),
-        content_type='application/json',
-        status=status.HTTP_400_BAD_REQUEST,
+          json.dumps(errors),
+          content_type='application/json',
+          status=status.HTTP_400_BAD_REQUEST
       )
 
 async def create_business_user(data, api_key = None):
@@ -59,15 +54,10 @@ async def create_business_user(data, api_key = None):
       return api_response
   else:
       errors = serializer.errors
-      json_errors = json.dumps(errors)
-
-      def error_generator():
-          yield json_errors
-
       return HttpResponse(
-        error_generator(),
-        content_type='application/json',
-        status=status.HTTP_400_BAD_REQUEST,
+          json.dumps(errors),
+          content_type='application/json',
+          status=status.HTTP_400_BAD_REQUEST
       )
 
 async def update_user(
