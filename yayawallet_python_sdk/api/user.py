@@ -62,6 +62,8 @@ async def create_business_user(data, api_key = None):
 
 async def update_user(
       account_name: Optional[str] = None,
+      referral_code: Optional[str] = None,
+      short_code: Optional[str] = None,
       name: Optional[str] = None,
       trade_name: Optional[str] = None,
       gender: Optional[str] = None,
@@ -91,6 +93,8 @@ async def update_user(
     **{
       key: value for key, value in {
         "account_name": account_name,
+        "referral_code": referral_code,
+        "short_code":short_code,
         "name": name,
         "trade_name": trade_name,
         "gender": gender,
