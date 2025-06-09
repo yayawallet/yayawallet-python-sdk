@@ -60,69 +60,14 @@ async def create_business_user(data, api_key = None):
           status=status.HTTP_400_BAD_REQUEST
       )
 
-async def update_user(
-      account_name: Optional[str] = None,
-      referral_code: Optional[str] = None,
-      short_code: Optional[str] = None,
-      name: Optional[str] = None,
-      trade_name: Optional[str] = None,
-      gender: Optional[str] = None,
-      region: Optional[str] = None,
-      location: Optional[str] = None,
-      date_of_birth: Optional[str] = None,
-      notes: Optional[str] = None,
-      photo_base64: Optional[str] = None,
-      id_front_base64: Optional[str] = None,
-      id_back_base64: Optional[str] = None,
-      sms_notification_enable: Optional[bool] = None,
-      email_notification_enable: Optional[bool] = None,
-      app_notification_enable: Optional[bool] = None,
-      block_incoming_transfer: Optional[bool] = None,
-      block_outgoing_transfer: Optional[bool] = None,
-      block_incoming_transaction: Optional[bool] = None,
-      block_outgoing_transaction: Optional[bool] = None,
-      tin_doc_base64: Optional[str] = None,
-      trade_license_doc_base64: Optional[str] = None,
-      aoa_doc_base64: Optional[str] = None,
-      moa_doc_base64: Optional[str] = None,
-      logo_base64: Optional[str] = None,
-      meta_data: Optional[str] = None,
-      api_key: str = None
-  ):
-  payload = {
-    **{
-      key: value for key, value in {
-        "account_name": account_name,
-        "referral_code": referral_code,
-        "short_code":short_code,
-        "name": name,
-        "trade_name": trade_name,
-        "gender": gender,
-        "region": region,
-        "location": location,
-        "date_of_birth": date_of_birth,
-        "notes": notes,
-        'photo_base64': photo_base64,
-        'id_front_base64': id_front_base64,
-        'id_back_base64': id_back_base64,
-        "sms_notification_enable": sms_notification_enable,
-        "email_notification_enable": email_notification_enable,
-        "app_notification_enable": app_notification_enable,
-        "block_incoming_transfer": block_incoming_transfer,
-        "block_outgoing_transfer": block_outgoing_transfer,
-        "block_incoming_transaction": block_incoming_transaction,
-        "block_outgoing_transaction": block_outgoing_transaction,
-        "tin_doc_base64": tin_doc_base64,
-        "trade_license_doc_base64": trade_license_doc_base64,
-        "aoa_doc_base64": aoa_doc_base64,
-        "moa_doc_base64": moa_doc_base64,
-        "logo_base64": logo_base64,
-        "meta_data": meta_data
-      }.items() if value is not None
+async def update_user(api_key: str = None, **kwargs):
+    payload = {
+        key: value 
+        for key, value in kwargs.items() 
+        if value is not None
     }
-  }
-  api_response = await api_request("POST", "/user/update", "", payload, api_key)
-  return api_response
+    api_response = await api_request("POST", "/user/update", "", payload, api_key)
+    return api_response
 
 async def document_actions(action: str, document: str, account_name: str, meta_data: Optional[str] = None, api_key: str = None):
   api_response = await api_request("POST", f"/user/documents/{action}/{document}", "", { "account_name": account_name, "meta_data": meta_data  }, api_key)
