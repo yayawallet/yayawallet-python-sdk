@@ -52,6 +52,10 @@ async def bulk_bill_status(param: Optional[dict] = None, api_key: Optional[str] 
   api_response = await api_request("GET", "/bulkimport/list", page_number_param, None, api_key)
   return api_response
 
+async def bulk_bill_details(id: str, api_key: Optional[str] = None):
+    api_response = await api_request("GET", f"/bulkimport/{id}", None, None, api_key)
+    return api_response
+
 async def update_bill(
   client_yaya_account: str,
   amount: float,
@@ -95,8 +99,13 @@ async def update_bill(
   return api_response
 
 async def bulk_bill_list(client_yaya_account, param: Optional[dict] = None, api_key: Optional[str] = None):
-  page_number_param = param or {"p": 1}
-  api_response = await api_request("POST", "/bill/list", page_number_param, {"client_yaya_account": client_yaya_account}, api_key)
+  if param is None:
+    param = {}
+  
+  if hasattr(param, 'dict'):
+    param = param.dict()
+    
+  api_response = await api_request("POST", "/bill/list", param, {"client_yaya_account": client_yaya_account}, api_key)
   return api_response
 
 async def bulk_bill_find(client_yaya_account, bill_id, api_key = None):
