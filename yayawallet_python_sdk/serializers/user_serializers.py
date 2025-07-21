@@ -55,3 +55,14 @@ class BusinessUserSerializer(serializers.Serializer):
         if not data.get('invitation_hash') and not data.get('fin'):
             raise serializers.ValidationError("Either invitation_hash or fin must be provided.")
         return data
+
+class AddOrganization(serializers.Serializer):
+    account_name = serializers.CharField(required=False, allow_blank=True)
+    trade_name = serializers.CharField(required=False, allow_blank=True)
+    tin_number = serializers.CharField(required=True)
+    license_number = serializers.CharField(required=True)
+    vat_number = serializers.CharField(required=False, allow_blank=True)
+    meta_data = serializers.JSONField(required=False)
+
+    def validate(self, data):
+        return data

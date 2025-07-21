@@ -4,7 +4,7 @@ from rest_framework import status
 
 from django.http import HttpResponse
 
-from ..serializers.user_serializers import CustomerUserSerializer, BusinessUserSerializer
+from ..serializers.user_serializers import AddOrganization, CustomerUserSerializer, BusinessUserSerializer
 
 import json
 
@@ -35,7 +35,7 @@ async def create_customer_user(data, api_key = None):
 
   if serializer.is_valid():
       validated_data = serializer.validated_data
-      api_response = await api_request("POST", "/user/register", "", validated_data, api_key)
+      api_response = await api_request("POST", "/user/add-organization", "", validated_data, api_key)
       return api_response
   else:
       errors = serializer.errors
@@ -60,10 +60,25 @@ async def create_business_user(data, api_key = None):
           status=status.HTTP_400_BAD_REQUEST
       )
 
+async def add_organization(data, api_key = None):
+  serializer = AddOrganization(data=data)
+
+  if serializer.is_valid():
+      validated_data = serializer.validated_data
+      api_response = await api_request("POST", "/user/register", "", validated_data, api_key)
+      return api_response
+  else:
+      errors = serializer.errors
+      return HttpResponse(
+          json.dumps(errors),
+          content_type='application/json',
+          status=status.HTTP_400_BAD_REQUEST
+      )
+
 async def update_user(api_key: str = None, **kwargs):
     payload = {
-        key: value 
-        for key, value in kwargs.items() 
+        key: value
+        for key, value in kwargs.items()
         if value is not None
     }
     api_response = await api_request("POST", "/user/update", "", payload, api_key)
