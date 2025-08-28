@@ -1,9 +1,9 @@
 from ..functions.api_request import api_request
-from typing import Optional, Any, List, Dict
+from typing import Optional
 
 
-async def create_simulated_transaction(institution: str, billId: str, forwardTransferRef: str, api_key: str = None):
-  api_response = await api_request("POST", "/simulated-transactions", "", {"institution": institution, "billId": billId, "forwardTransferRef": forwardTransferRef}, api_key)
+async def create_simulated_transaction(institution: str, bill_id: str, forward_transfer_ref: str, api_key: str = None):
+  api_response = await api_request("POST", "/simulated-transactions", "", {"institution": institution, "bill_id": bill_id, "forward_transfer_ref": forward_transfer_ref}, api_key)
   return api_response
 
 async def create_bulk_simulated_transaction( transactions, api_key: str = None):
