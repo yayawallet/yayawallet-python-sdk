@@ -10,6 +10,7 @@ async def create_bulk_simulated_transaction( transactions, api_key: str = None):
   api_response = await api_request(
       "POST",
       "/bulkimport/simulated-transactions",
+      "",
       transactions,
       api_key
   )
