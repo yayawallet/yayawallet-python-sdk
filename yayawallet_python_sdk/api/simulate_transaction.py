@@ -22,7 +22,7 @@ async def check_bulk_status(param: Optional[dict] = None, api_key: Optional[str]
   if hasattr(param, 'dict'):
     param = param.dict()
 
-  api_response = await api_request("GET", "/bulkimport", param, None, api_key)
+  api_response = await api_request("GET", "/bulkimport/", param, None, api_key)
   return api_response
 
 async def bulk_status_details(uuid: str, api_key: Optional[str] = None):
