@@ -60,3 +60,7 @@ async def  get_pending_verification_transfers(param: Optional[dict] = None, api_
 async def update_simulated_transfer(simulated_transaction_id: str, valid_ref_num: str, channel: str, api_key: str = None):
   api_response = await api_request("POST", "/admin/simulated-transfer/update", "", {"simulated_transaction_id": simulated_transaction_id, "valid_ref_num": valid_ref_num, "channel": channel}, api_key)
   return api_response
+
+async def reverse_simulated_transfer(transfer_id: str, api_key: str = None):
+  api_response = await api_request("POST", "/admin/simulated-transfer/reverse", "", {"transfer_id": transfer_id}, api_key)
+  return api_response
