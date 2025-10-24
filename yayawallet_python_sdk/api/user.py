@@ -30,20 +30,28 @@ async def get_balance(api_key: str = None):
   api_response = await api_request("GET", "/user/balance", "", None, api_key)
   return api_response
 
-async def create_customer_user(data, api_key = None):
-  serializer = CustomerUserSerializer(data=data)
-
-  if serializer.is_valid():
-      validated_data = serializer.validated_data
-      api_response = await api_request("POST", "/user/add-organization", "", validated_data, api_key)
+async def add_organization(data, api_key = None):
+      api_response = await api_request("POST", "/user/add-organization", "", data, api_key)
       return api_response
-  else:
-      errors = serializer.errors
-      return HttpResponse(
-          json.dumps(errors),
-          content_type='application/json',
-          status=status.HTTP_400_BAD_REQUEST
-      )
+
+async def create_customer_user(data, api_key = None):
+      api_response = await api_request("POST", "/user/register", "", data, api_key)
+      return api_response
+
+# async def create_customer_user(data, api_key = None):
+#   serializer = CustomerUserSerializer(data=data)
+
+#   if serializer.is_valid():
+#       validated_data = serializer.validated_data
+#       api_response = await api_request("POST", "/user/add-organization", "", validated_data, api_key)
+#       return api_response
+#   else:
+#       errors = serializer.errors
+#       return HttpResponse(
+#           json.dumps(errors),
+#           content_type='application/json',
+#           status=status.HTTP_400_BAD_REQUEST
+#       )
 
 async def create_business_user(data, api_key = None):
   serializer = BusinessUserSerializer(data=data)
@@ -60,20 +68,20 @@ async def create_business_user(data, api_key = None):
           status=status.HTTP_400_BAD_REQUEST
       )
 
-async def add_organization(data, api_key = None):
-  serializer = AddOrganization(data=data)
+# async def add_organization(data, api_key = None):
+#   serializer = AddOrganization(data=data)
 
-  if serializer.is_valid():
-      validated_data = serializer.validated_data
-      api_response = await api_request("POST", "/user/register", "", validated_data, api_key)
-      return api_response
-  else:
-      errors = serializer.errors
-      return HttpResponse(
-          json.dumps(errors),
-          content_type='application/json',
-          status=status.HTTP_400_BAD_REQUEST
-      )
+#   if serializer.is_valid():
+#       validated_data = serializer.validated_data
+#       api_response = await api_request("POST", "/user/register", "", validated_data, api_key)
+#       return api_response
+#   else:
+#       errors = serializer.errors
+#       return HttpResponse(
+#           json.dumps(errors),
+#           content_type='application/json',
+#           status=status.HTTP_400_BAD_REQUEST
+#       )
 
 async def update_user(api_key: str = None, **kwargs):
     payload = {
