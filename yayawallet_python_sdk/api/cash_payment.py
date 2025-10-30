@@ -2,7 +2,7 @@ from typing import Optional
 from ..functions.api_request import api_request
 
 async def pay_by_cash(urlSlag: str, receiver: str, notes: Optional[str] = None, api_key: str = None):
-  api_response = await api_request("POST", f"/payment-intent/{urlSlag}", "", {"receiver": receiver, "notes":  notes}, api_key)
+  api_response = await api_request("POST", f"/payment-intent/{urlSlag}/mark-cash-paid", "", {"receiver": receiver, "notes":  notes}, api_key)
   return api_response
 
 async def get_daily_cash_transactions(accountId: str, date: str , api_key: str = None):
