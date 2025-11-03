@@ -20,3 +20,11 @@ async def process_settlement(data: dict, api_key: str = None):
 async def get_setlement_statics(accountId: str, api_key: str = None):
   api_response = await api_request("GET", f"/cash-settlement/stats/{accountId}", "", None, api_key)
   return api_response
+
+async def send_otp_payment(phone: str, uniqueRef: str, api_key: str = None):
+  api_response = await api_request("POST", "/payment-intent/send-otp-payment", "", {"phone": phone, "uniqueRef":  uniqueRef}, api_key)
+  return api_response
+
+async def verify_otp_payment(phone: str, uniqueRef: str, otp: str, api_key: str = None):
+  api_response = await api_request("POST", "/payment-intent/verify-otp-payment", "", {"phone": phone, "uniqueRef":  uniqueRef, otp: str}, api_key)
+  return api_response
