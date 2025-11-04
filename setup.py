@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='yayawallet-python-sdk',
-    version='1.9.0',
+    version='1.9.2',
     author="YaYa Wallet",
     author_email="contact@yayawallet.com",
     long_description=open('README.md').read(),
