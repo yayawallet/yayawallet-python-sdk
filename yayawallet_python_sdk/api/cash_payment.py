@@ -9,8 +9,8 @@ async def get_daily_cash_transactions(accountId: str, date: str , api_key: str =
   api_response = await api_request("GET", f"/payment-intent/cash-transactions/daily/{accountId}/{date}", "", None, api_key)
   return api_response
 
-async def get_blocked_balace(accountId: str, api_key: str = None):
-  api_response = await api_request("GET", f"/cash-settlement/blocked-balances/{accountId}", "", None, api_key)
+async def get_blocked_balace(api_key: str = None):
+  api_response = await api_request("GET", "/cash-settlement/blocked-balances", "", None, api_key)
   return api_response
 
 async def process_settlement(data: dict, api_key: str = None):
@@ -27,4 +27,12 @@ async def send_otp_payment(phone: str, uniqueRef: str, api_key: str = None):
 
 async def verify_otp_payment(phone: str, uniqueRef: str, otp: str, api_key: str = None):
   api_response = await api_request("POST", "/payment-intent/verify-otp-payment", "", {"phone": phone, "uniqueRef":  uniqueRef, "otp": otp}, api_key)
+  return api_response
+
+async def get_balance(api_key: str = None):
+  api_response = await api_request("GET", "/cash-settlement/balance", "", None, api_key)
+  return api_response
+
+async def get_banks(api_key: str = None):
+  api_response = await api_request("GET", "/cash-settlement/banks", "", None, api_key)
   return api_response
