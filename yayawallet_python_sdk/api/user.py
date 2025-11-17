@@ -35,7 +35,7 @@ async def create_customer_user(data, api_key = None):
 
   if serializer.is_valid():
       validated_data = serializer.validated_data
-      api_response = await api_request("POST", "/user/add-organization", "", validated_data, api_key)
+      api_response = await api_request("POST", "/user/register", "", validated_data, api_key)
       return api_response
   else:
       errors = serializer.errors
@@ -65,7 +65,7 @@ async def add_organization(data, api_key = None):
 
   if serializer.is_valid():
       validated_data = serializer.validated_data
-      api_response = await api_request("POST", "/user/register", "", validated_data, api_key)
+      api_response = await api_request("POST", "/user/add-organization", "", validated_data, api_key)
       return api_response
   else:
       errors = serializer.errors

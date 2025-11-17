@@ -49,6 +49,7 @@ class BusinessUserSerializer(serializers.Serializer):
     license_doc_base64 = serializers.CharField(required=False, allow_blank=True)
     logo_base64 = serializers.CharField(required=False, allow_blank=True)
     vat_number = serializers.CharField(required=False, allow_blank=True)
+    associate=serializers.CharField(required=False, allow_blank=True)
     meta_data = serializers.JSONField(required=False)
 
     def validate(self, data):
@@ -58,10 +59,13 @@ class BusinessUserSerializer(serializers.Serializer):
 
 class AddOrganization(serializers.Serializer):
     account_name = serializers.CharField(required=False, allow_blank=True)
-    trade_name = serializers.CharField(required=False, allow_blank=True)
+    trade_name = serializers.CharField(required=True)
     tin_number = serializers.CharField(required=True)
     license_number = serializers.CharField(required=True)
     vat_number = serializers.CharField(required=False, allow_blank=True)
+    associate = serializers.CharField(required=True)
+    address = serializers.CharField(required=True)
+
     meta_data = serializers.JSONField(required=False)
 
     def validate(self, data):
