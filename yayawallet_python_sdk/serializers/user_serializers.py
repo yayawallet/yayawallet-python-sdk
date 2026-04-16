@@ -16,6 +16,7 @@ class CustomerUserSerializer(serializers.Serializer):
     photo_base64 = serializers.CharField(required=True)
     id_front_base64 = serializers.CharField(required=True)
     id_back_base64 = serializers.CharField(required=True)
+    otp = serializers.CharField(required=True)
     meta_data = serializers.JSONField(required=False)
 
     def validate(self, data):
